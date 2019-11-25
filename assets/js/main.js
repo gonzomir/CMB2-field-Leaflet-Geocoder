@@ -102,7 +102,8 @@
         CMB2LM.initial_coordinates.lat,
         CMB2LM.initial_coordinates.lng
       ],
-      zoom: CMB2LM.initial_zoom
+      zoom: CMB2LM.initial_zoom,
+      doubleClickZoom: false,
     });
 
     L.tileLayer(CMB2LM.tilelayer, {
@@ -125,6 +126,11 @@
     // Remove default markers on geocoder results
     map.on('geocoderMarkerAdd', function () {
       return map.removeLayer(marker);
+    });
+
+    map.on('dblclick', function(e) {
+      addMarker(e.latlng, map, marker);
+      handleLatLngChange(e.latlng, context);
     });
 
     maps.push(map);
